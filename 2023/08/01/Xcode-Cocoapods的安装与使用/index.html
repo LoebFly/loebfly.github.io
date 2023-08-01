@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Loebfly">
+
+
+
+
+
+<title>Xcode-Cocoapods的安装与使用 | Loebfly</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Loebfly 的博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">贴子</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Loebfly 的博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">贴子</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6;    // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function () {
+            tocbot.refresh(obj_merge(tocbot_default_config, { hasInnerContainers: true }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function () {
+        tocbot.init(obj_merge(tocbot_default_config, { collapseDepth: 1 }));
+    });
+
+    function expandToc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, { collapseDepth: expanded ? 1 : DEPTH_MAX }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Xcode-Cocoapods的安装与使用</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">Loebfly&nbsp;&nbsp</a>
+                    
+
+                    
+                        <span class="post-time">
+                        时间: <a href="#">2023-08-01&nbsp;&nbsp;14:42:29</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p><strong><a target="_blank" rel="noopener" href="https://cocoapods.org/">CocoaPods 官网</a></strong></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p><code>CocoaPods</code>安装需要依赖 <code>Ruby</code>，<code>Mac</code>已自带<code>Ruby</code>环境 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gem -v</span><br><span class="line">3.0.3</span><br></pre></td></tr></table></figure>
+<p><code>Ruby</code>的软件源使用的是国外的，如果没有科学上网国内使用可能会出现不稳定、速度慢之类的问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ gem sources</span><br><span class="line">*** CURRENT SOURCES ***</span><br><span class="line"></span><br><span class="line">https://rubygems.org/</span><br></pre></td></tr></table></figure>
+<p>建议移除国外源替换为国内的<a target="_blank" rel="noopener" href="https://gems.ruby-china.org/">China ruby 源</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//移除</span><br><span class="line"> $ gem sources --r https://rubygems.org/</span><br><span class="line">https://rubygems.org/ removed from sources</span><br><span class="line">//添加</span><br><span class="line">$ gem sources --a https://gems.ruby-china.com</span><br><span class="line">https://gems.ruby-china.com added to sources</span><br></pre></td></tr></table></figure>
+<p><code>Ruby</code>用管理员权限安装<code>Cocoapods</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gem install -n /usr/local/bin cocoapods</span><br></pre></td></tr></table></figure>
+<p>过程简述</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Password:</span><br><span class="line">//输入密码开始安装</span><br><span class="line">Fetching concurrent-ruby-1.1.5.gem</span><br><span class="line">......</span><br><span class="line">//安装完成</span><br><span class="line">Done installing documentation for thread_safe</span><br><span class="line">......</span><br><span class="line">cocoapods after 25 seconds</span><br><span class="line">29 gems installed</span><br></pre></td></tr></table></figure>
+<p>通过<code>gem</code>查看<code>cocoapods</code> 相关安装列表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ gem list --local | grep cocoapods</span><br><span class="line">cocoapods (1.8.4)</span><br><span class="line">cocoapods-core (1.8.4)</span><br><span class="line">cocoapods-deintegrate (1.0.4)</span><br><span class="line">cocoapods-downloader (1.2.2)</span><br><span class="line">cocoapods-plugins (1.0.0)</span><br><span class="line">cocoapods-search (1.0.0)</span><br><span class="line">cocoapods-stats (1.1.0)</span><br><span class="line">cocoapods-trunk (1.4.1)</span><br><span class="line">cocoapods-try (1.1.0)</span><br></pre></td></tr></table></figure>
+<p>#更新</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//pod更新最新版本</span><br><span class="line">sudo gem install -n /usr/local/bin cocoapods --pre</span><br><span class="line"></span><br><span class="line">//pod 更新到指定版本</span><br><span class="line">sudo gem install -n /usr/local/bin cocoapods -v 1.4.0</span><br></pre></td></tr></table></figure>
+<h1 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//上面cocoapods列表依次执行</span><br><span class="line">$ sudo gem uninstall cocoapods</span><br><span class="line">$ sudo gem uninstall cocoapods-core</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>这条命令是将Github上的pod 托管的Podspec索引都安装到本地</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pod setup</span><br><span class="line">Setting up CocoaPods master repo</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>正常情况下应该是经过漫长的等待后 <code>pod </code>仓库拉取配置完成</p>
+<p>然而不知道什么原因我的电脑 <code>$pod setup</code> 什么都没有发生就直接结束了，什么也不报错</p>
+<p>那这个时候怎么办，一想不就是给 <code>pod </code>添加索引库嘛？</p>
+<ul>
+<li>plan 1</li>
+</ul>
+<p>那我就手动添加试一下咯</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pod repo add master https://github.com/CocoaPods/Specs.git</span><br><span class="line">Cloning spec repo `master` from `https://github.com/CocoaPods/Specs.git`</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>这个过程也是非常漫长的，等了好一会，我新开了一个终端查看了下当前的已下载的文件大小<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/.cocoapods</span><br><span class="line">$ du -sh *</span><br><span class="line">43M repos</span><br></pre></td></tr></table></figure><br>等待总是很烦的，按照这个下载速度我要等到花都谢了，本来以为等就完了，然而出现了下面的错误</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[!] /usr/bin/git clone https://github.com/CocoaPods/Specs.git -- master</span><br><span class="line"></span><br><span class="line">Cloning into &#x27;master&#x27;...</span><br><span class="line">error: RPC failed; curl 56 LibreSSL SSL_read: SSL_ERROR_SYSCALL, errno 54</span><br><span class="line">fatal: the remote end hung up unexpectedly</span><br><span class="line">fatal: early EOF</span><br><span class="line">fatal: index-pack failed</span><br></pre></td></tr></table></figure>
+<p>出现这问题其实就是你当前网络环境不好，多试几次或则换个网络再有就是科学上网也试试，等到终端结束到下一个命令行的开始就添加成功了</p>
+<ul>
+<li>plan 2</li>
+</ul>
+<p>找个已经安装好 <code>pod</code>索引库的电脑，把<code>~/.cocoapods/repos</code> 路径下的<code>master</code> 直接压缩拷贝，然后解压到你电脑相同目录即可</p>
+<ul>
+<li>plan 3</li>
+</ul>
+<p>直接去<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/Specs.git%E4%B8%8B%E8%BD%BD">https://github.com/CocoaPods/Specs.git下载</a> <code>zip</code>,同样解压到plan 2的目录，并把文件夹名字修改为 <code>master</code></p>
+<hr>
+<p>通过<code>pod</code>查看已添加的 <code>repo</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ pod repo list</span><br><span class="line"></span><br><span class="line">master</span><br><span class="line">- Type: git (master)</span><br><span class="line">- URL:  https://github.com/CocoaPods/Specs.git</span><br><span class="line">- Path: /Users/QingGe/.cocoapods/repos/master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>常用<code>pod</code> 命令及解释</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//生成Podfile文件，编写需要的第三方文件</span><br><span class="line">$ pod init </span><br><span class="line"></span><br><span class="line">//安装第三方库，安装成功会生成`podfile.lock`文件用来记录第三方库版本，后面接上--no--repo--install 的意思是不更新本地索引库</span><br><span class="line">$ pod install </span><br><span class="line">$ pod install --no--repo--install</span><br><span class="line"></span><br><span class="line">//更新第三方库为本地索引库最新版本，后面接上--no--repo--update的意思是不更新本地索引库</span><br><span class="line">$ pod update </span><br><span class="line">$ pod update --no--repo--update</span><br><span class="line"></span><br><span class="line">//搜索当前本地索引仓库中对应的第三方库</span><br><span class="line">$ pod search 第三方库名称</span><br><span class="line"></span><br><span class="line">//查看当前版本</span><br><span class="line">$pod --version</span><br><span class="line"></span><br><span class="line">//更新本地所有索引库 ，更新指定索引库接上索引库名称即可</span><br><span class="line">$ pod repo update</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h1><p>1、<code>cd</code> 到 <code>.xcodeproj</code>所在目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd Desktop/podDemo</span><br></pre></td></tr></table></figure>
+<p>2、<code>.xcodeproj</code>同级目录初始化<code>Podfile</code>文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod init</span><br></pre></td></tr></table></figure>
+<p>3、生成 pod 工程，之后都通过<code>.xcworkspace</code>打开工程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ pod install</span><br><span class="line">Analyzing dependencies</span><br><span class="line">Downloading dependencies</span><br><span class="line">Generating Pods project</span><br><span class="line">Integrating client project</span><br><span class="line"></span><br><span class="line">[!] Please close any current Xcode sessions and use `podDemo.xcworkspace` for this project from now on.</span><br><span class="line">Pod installation complete! There are 0 dependencies from the Podfile and 0 total pods installed.</span><br><span class="line"></span><br><span class="line">[!] The Podfile does not contain any dependencies.</span><br><span class="line"></span><br><span class="line">[!] Automatically assigning platform `iOS` with version `13.2` on target `podDemo` because no platform was specified. Please specify a platform for this target in your Podfile. See `https://guides.cocoapods.org/syntax/podfile.html#platform`.</span><br></pre></td></tr></table></figure>
+<p>4、编写并安装所需第三方库<br>4.1、查找所需第三方库<br><code>注意第三库名称不能写错，因为不支持模糊查找</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ pod search AFNetWorking</span><br><span class="line">-&gt; AFNetworking (3.2.1)</span><br><span class="line">   A delightful iOS and OS X networking framework.</span><br><span class="line">   pod &#x27;AFNetworking&#x27;, &#x27;~&gt; 3.2.1&#x27;</span><br><span class="line">   - Homepage: https://github.com/AFNetworking/AFNetworking</span><br><span class="line">   - Source:   https://github.com/AFNetworking/AFNetworking.git</span><br><span class="line">   - Versions: 3.2.1, 3.2.0, 3.1.0, 3.0.4, 3.0.3, 3.0.2, 3.0.1, 3.0.0,</span><br><span class="line">   3.0.0-beta.3, 3.0.0-beta.2, 3.0.0-beta.1, 2.7.0, 2.6.3, 2.6.2, 2.6.1, 2.6.0,</span><br><span class="line">   2.5.4, 2.5.3, 2.5.2, 2.5.1, 2.5.0, 2.4.1, 2.4.0, 2.3.1, 2.3.0, 2.2.4, 2.2.3,</span><br><span class="line">   2.2.2, 2.2.1, 2.2.0, 2.1.0, 2.0.3, 2.0.2, 2.0.1, 2.0.0, 2.0.0-RC3, 2.0.0-RC2,</span><br><span class="line">   2.0.0-RC1, 1.3.4, 1.3.3, 1.3.2, 1.3.1, 1.3.0, 1.2.1, 1.2.0, 1.1.0, 1.0.1,</span><br><span class="line">   1.0, 1.0RC3, 1.0RC2, 1.0RC1, 0.10.1, 0.10.0, 0.9.2, 0.9.1, 0.9.0, 0.7.0,</span><br><span class="line">   0.5.1 [master repo]</span><br><span class="line">   - Subspecs:</span><br><span class="line">     - AFNetworking/Serialization (3.2.1)</span><br><span class="line">     - AFNetworking/Security (3.2.1)</span><br><span class="line">     - AFNetworking/Reachability (3.2.1)</span><br><span class="line">     - AFNetworking/NSURLSession (3.2.1)</span><br><span class="line">     - AFNetworking/UIKit (3.2.1)</span><br><span class="line">......</span><br><span class="line">:</span><br></pre></td></tr></table></figure>
+<p>复制 <code>pod &#39;AFNetworking&#39;, &#39;~&gt; 3.2.1&#39;</code> ，按 Q 退出</p>
+<p>4.2、编写<code>Podfile</code>,<code>vim</code> 准备编辑，<code>i</code> 开始编辑，<code>esc</code> 退出编辑，<code>shift+：</code>输入<code>wq</code>即 保存并退出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ vim Podfile</span><br><span class="line"># Uncomment the next line to define a global platform for your project</span><br><span class="line">//指定系统版本</span><br><span class="line"># platform :ios, &#x27;9.0&#x27;</span><br><span class="line"></span><br><span class="line">//指定索引源</span><br><span class="line">source &quot;https://github.com/CocoaPods/Specs.git&quot;</span><br><span class="line"></span><br><span class="line">target &#x27;podDemo&#x27; do</span><br><span class="line">  # Comment the next line if you don&#x27;t want to use dynamic frameworks</span><br><span class="line">  use_frameworks!</span><br><span class="line"></span><br><span class="line">  # Pods for podDemo</span><br><span class="line">  //复制到这里</span><br><span class="line">  pod &#x27;AFNetworking&#x27;, &#x27;~&gt; 3.2.1&#x27;</span><br><span class="line">end</span><br><span class="line">......</span><br><span class="line">&quot;Podfile&quot; 10L, 230C</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ps: 也可以通过 打开 工程找到<code>Podfile</code>文件直接编写</li>
+</ul>
+<p>4.3 、安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ pod install</span><br><span class="line">Analyzing dependencies</span><br><span class="line">Downloading dependencies</span><br><span class="line">Installing AFNetworking (3.2.1)</span><br><span class="line">Generating Pods project</span><br><span class="line">Integrating client project</span><br><span class="line">Pod installation complete! There is 1 dependency from the Podfile and 1 total pod installed.</span><br><span class="line"></span><br><span class="line">[!] Automatically assigning platform `iOS` with version `13.2` on target `podDemo` because no platform was specified. Please specify a platform for this target in your Podfile. See `https://guides.cocoapods.org/syntax/podfile.html#platform`.</span><br></pre></td></tr></table></figure>
+<p>4.4、引入（通过<code>&lt; &gt;</code>形式）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;AFNetworking/AFNetworking.h&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>end</code></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                <!-- 
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>Loebfly</span>
+                    </p>
+                 -->
+                <!-- 
+                    <p class="copyright-item">
+                        <span>链接:</span>
+                        <span><a href="https://loebfly.github.io/2023/08/01/Xcode-Cocoapods%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">https://loebfly.github.io/2023/08/01/Xcode-Cocoapods%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">首页</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/08/01/Linux%E5%BC%80%E5%90%AF%E7%A8%8B%E5%BA%8F%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8Cshell%E8%84%9A%E6%9C%AC/">Linux开启程序后台运行shell脚本</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Loebfly 2022 </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
